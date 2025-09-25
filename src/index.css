@@ -1,96 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Arogya Connect Design System - Modern Healthcare Platform with Glass Morphism */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    /* Healthcare Color Palette */
+    --primary: 195 53% 53%; /* Soft teal #4A90A4 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 195 53% 65%;
+    
+    --secondary: 88 51% 52%; /* Warm green #7CB342 */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-glow: 88 51% 65%;
+    
+    --accent: 14 100% 70%; /* Gentle orange #FF8A65 */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 14 100% 80%;
+    
+    --background: 210 20% 98%; /* Clean white with subtle tint */
+    --foreground: 215 25% 22%; /* Dark gray #2D3748 */
+    
+    --card: 0 0% 100%; /* Semi-transparent white */
+    --card-foreground: 215 25% 22%;
+    --card-glass: 0 0% 100%; /* For glass morphism cards */
+    
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 195 53% 53%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 88 51% 52%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 45 100% 60%;
+    --warning-foreground: 0 0% 100%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --popover-foreground: 215 25% 22%;
+    
+    /* Glass morphism variables */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsla(var(--primary), 0.1), hsla(var(--secondary), 0.05));
+    --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.95));
+    --gradient-overlay: linear-gradient(135deg, rgba(74, 144, 164, 0.9), rgba(124, 179, 66, 0.8));
+    
+    /* Shadows */
+    --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-focus: 0 0 0 3px hsla(var(--primary), 0.3);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;  /* 8px */
+    --spacing-sm: 1rem;    /* 16px */
+    --spacing-md: 1.5rem;  /* 24px */
+    --spacing-lg: 2rem;    /* 32px */
+    --spacing-xl: 3rem;    /* 48px */
+    
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Typography */
+    --font-size-xs: 0.75rem;   /* 12px */
+    --font-size-sm: 0.875rem;  /* 14px */
+    --font-size-base: 1rem;    /* 16px */
+    --font-size-lg: 1.125rem;  /* 18px */
+    --font-size-xl: 1.25rem;   /* 20px */
+    --font-size-2xl: 1.5rem;   /* 24px */
+    --font-size-3xl: 2rem;     /* 32px */
+    
+    /* Transitions */
+    --transition-fast: all 0.15s ease;
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 215 28% 7%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
+    
+    --card: 215 28% 9%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --card-glass: 215 28% 12%;
+    
+    --primary: 195 53% 65%;
+    --primary-foreground: 215 28% 7%;
+    
+    --secondary: 88 51% 65%;
+    --secondary-foreground: 215 28% 7%;
+    
+    --accent: 14 100% 75%;
+    --accent-foreground: 215 28% 7%;
+    
+    --muted: 215 28% 15%;
+    --muted-foreground: 217 10% 65%;
+    
+    --border: 215 28% 18%;
+    --input: 215 28% 18%;
+    --ring: 195 53% 65%;
+    
+    --glass-bg: rgba(30, 41, 59, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -98,8 +124,71 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground leading-relaxed;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Glass morphism utility classes */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+  }
+  
+  .glass-card {
+    @apply glass rounded-2xl;
+  }
+  
+  .glass-nav {
+    @apply glass border-b border-white/10;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* Healthcare specific styles */
+  .healthcare-gradient {
+    background: var(--gradient-primary);
+  }
+  
+  .emergency-pulse {
+    animation: emergency-pulse 2s infinite;
+  }
+  
+  @keyframes emergency-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsla(var(--destructive), 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 8px hsla(var(--destructive), 0);
+    }
+  }
+  
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .glass {
+      background: hsl(var(--card));
+      border: 2px solid hsl(var(--border));
+    }
+  }
+  
+  /* Focus styles for better accessibility */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 }
