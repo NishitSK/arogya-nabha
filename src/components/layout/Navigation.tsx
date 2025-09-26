@@ -16,10 +16,12 @@ import {
   Phone
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -43,22 +45,10 @@ export const Navigation = () => {
       icon: Stethoscope 
     },
     { 
-      path: "/nurse", 
-      label: "नर्स", // Nurse in Hindi
-      labelEn: "Nurse",
-      icon: UserCheck 
-    },
-    { 
       path: "/hospitals", 
       label: "अस्पताल", // Hospital in Hindi
       labelEn: "Hospitals",
       icon: Map 
-    },
-    { 
-      path: "/health-info", 
-      label: "स्वास्थ्य जानकारी", // Health Info in Hindi
-      labelEn: "Health Info",
-      icon: Book 
     },
     { 
       path: "/emergency", 
@@ -95,7 +85,7 @@ export const Navigation = () => {
                   )}
                 >
                   <item.icon className="h-4 w-4" />
-                  <span className="text-sm">{item.labelEn}</span>
+                  <span className="text-sm">{t(`nav.${item.path === '/' ? 'home' : item.path.slice(1)}`)}</span>
                 </Button>
               </Link>
             ))}
@@ -134,8 +124,7 @@ export const Navigation = () => {
                   >
                     <item.icon className="h-5 w-5" />
                     <div className="flex flex-col items-start">
-                      <span className="text-sm font-medium">{item.labelEn}</span>
-                      <span className="text-xs text-muted-foreground">{item.label}</span>
+                      <span className="text-sm font-medium">{t(`nav.${item.path === '/' ? 'home' : item.path.slice(1)}`)}</span>
                     </div>
                   </Button>
                 </Link>

@@ -15,8 +15,10 @@ import {
   Phone
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const HomePage = () => {
+  const { t } = useLanguage();
   const quickActions = [
     {
       title: "Book Appointment",
@@ -86,14 +88,13 @@ export const HomePage = () => {
         <div className="container mx-auto text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
-              Arogya Connect
+              {t('home.title')}
             </h1>
             <h2 className="text-xl md:text-2xl text-secondary mb-4">
-              आरोग्य कनेक्ट - Rural Healthcare Platform
+              {t('home.subtitle')}
             </h2>
             <p className="text-lg md:text-xl text-foreground/80 mb-8 leading-relaxed">
-              Connecting rural communities in Nabha, Punjab with quality healthcare services. 
-              Bridging the gap between patients and medical professionals through technology.
+              {t('home.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -101,7 +102,7 @@ export const HomePage = () => {
                 size="lg" 
                 className="glass-card border-2 border-primary/30 hover:border-primary/50 focus-ring"
               >
-                <Link to="/patient">Get Started</Link>
+                <Link to="/patient">{t('home.getStarted')}</Link>
               </Button>
               <Button 
                 asChild 
@@ -111,7 +112,7 @@ export const HomePage = () => {
               >
                 <Link to="/emergency">
                   <Phone className="mr-2 h-5 w-5" />
-                  Emergency
+                  {t('home.emergency')}
                 </Link>
               </Button>
             </div>
@@ -124,10 +125,10 @@ export const HomePage = () => {
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Quick Access Services
+              {t('home.quickAccess')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Essential healthcare services at your fingertips
+              {t('home.quickAccessDesc')}
             </p>
           </div>
           
@@ -139,13 +140,10 @@ export const HomePage = () => {
                     <action.icon className={`h-8 w-8 text-${action.color}`} />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    {action.title}
+                    {t(`home.${action.title.toLowerCase().replace(/\s+/g, '')}`)}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    {action.titleHi}
-                  </p>
                   <p className="text-sm text-muted-foreground">
-                    {action.description}
+                    {t(`home.${action.title.toLowerCase().replace(/\s+/g, '')}Desc`)}
                   </p>
                 </Card>
               </Link>
@@ -159,10 +157,10 @@ export const HomePage = () => {
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Healthcare Excellence
+              {t('home.excellence')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Comprehensive medical services designed for rural communities
+              {t('home.excellenceDesc')}
             </p>
           </div>
           
@@ -174,10 +172,10 @@ export const HomePage = () => {
                   {service.count}
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {service.title}
+                  {t(`home.${service.title.toLowerCase().replace(/\s+/g, '')}`)}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {service.description}
+                  {t(`home.${service.title.toLowerCase().replace(/\s+/g, '')}Desc`)}
                 </p>
               </Card>
             ))}
@@ -191,18 +189,17 @@ export const HomePage = () => {
           <Card className="glass-card max-w-2xl mx-auto p-8 border-accent/20">
             <Shield className="h-16 w-16 text-accent mx-auto mb-6" />
             <h2 className="text-2xl font-bold text-foreground mb-4">
-              Join the Healthcare Revolution
+              {t('home.joinRevolution')}
             </h2>
             <p className="text-muted-foreground mb-6">
-              Experience modern healthcare services tailored for rural communities. 
-              Quality care, right at your doorstep.
+              {t('home.joinDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="focus-ring">
-                <Link to="/patient">Start as Patient</Link>
+                <Link to="/patient">{t('home.startPatient')}</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="focus-ring">
-                <Link to="/doctor">Healthcare Provider Login</Link>
+                <Link to="/doctor">{t('home.providerLogin')}</Link>
               </Button>
             </div>
           </Card>

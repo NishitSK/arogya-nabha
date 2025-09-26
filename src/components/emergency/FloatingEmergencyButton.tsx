@@ -4,23 +4,25 @@ import { Phone, AlertTriangle, MapPin, Clock } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const FloatingEmergencyButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const emergencyContacts = [
-    { name: "Ambulance", number: "108", type: "ambulance" },
-    { name: "Police", number: "100", type: "police" },
-    { name: "Fire Brigade", number: "101", type: "fire" },
-    { name: "Nabha Civil Hospital", number: "+91-1765-230123", type: "hospital" },
+    { name: t("common.ambulance"), number: "108", type: "ambulance" },
+    { name: t("common.police"), number: "100", type: "police" },
+    { name: t("common.fire"), number: "101", type: "fire" },
+    { name: t("common.hospital"), number: "+91-1765-230123", type: "hospital" },
   ];
 
   const handleEmergencyCall = (contact: typeof emergencyContacts[0]) => {
     // In a real app, this would initiate a call
     toast({
-      title: "Emergency Call Initiated",
-      description: `Calling ${contact.name}: ${contact.number}`,
+      title: t("emergency.callInitiated"),
+      description: `${t("emergency.calling")} ${contact.name}: ${contact.number}`,
       variant: "destructive",
     });
     
@@ -50,7 +52,7 @@ export const FloatingEmergencyButton = () => {
           <DialogHeader>
             <DialogTitle className="flex items-center space-x-2 text-destructive">
               <AlertTriangle className="h-6 w-6" />
-              <span>Emergency Services</span>
+              <span>{t("emergency.services")}</span>
             </DialogTitle>
           </DialogHeader>
           
@@ -60,7 +62,7 @@ export const FloatingEmergencyButton = () => {
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="font-medium">Current Location</p>
+                  <p className="font-medium">{t("emergency.location")}</p>
                   <p className="text-sm text-muted-foreground">Nabha, Punjab</p>
                 </div>
               </div>
@@ -70,7 +72,7 @@ export const FloatingEmergencyButton = () => {
             <div className="space-y-3">
               <h3 className="font-semibold flex items-center space-x-2">
                 <Clock className="h-5 w-5 text-primary" />
-                <span>Quick Dial</span>
+                <span>{t("emergency.quickDial")}</span>
               </h3>
               
               {emergencyContacts.map((contact, index) => (
@@ -92,9 +94,9 @@ export const FloatingEmergencyButton = () => {
             {/* First Aid Info */}
             <Card className="glass-card border-accent/20 p-4 bg-accent/5">
               <div className="text-sm">
-                <p className="font-medium text-accent">First Aid Reminder:</p>
+                <p className="font-medium text-accent">{t("emergency.firstAid")}</p>
                 <p className="text-muted-foreground mt-1">
-                  Keep patient calm, check breathing, call for help immediately.
+                  {t("emergency.firstAidText")}
                 </p>
               </div>
             </Card>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu,
@@ -8,9 +7,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Languages, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage, type Language as LanguageType } from "@/hooks/useLanguage";
 
 type Language = {
-  code: string;
+  code: LanguageType;
   name: string;
   nativeName: string;
 };
@@ -22,12 +22,14 @@ const languages: Language[] = [
 ];
 
 export const LanguageSwitcher = () => {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]);
+  const { currentLanguage, changeLanguage } = useLanguage();
+  
+  const getCurrentLanguageData = () => {
+    return languages.find(lang => lang.code === currentLanguage) || languages[0];
+  };
 
   const handleLanguageChange = (language: Language) => {
-    setCurrentLanguage(language);
-    // Here you would typically update your i18n context/state
-    console.log(`Language changed to: ${language.code}`);
+    changeLanguage(language.code);
   };
 
   return (
@@ -40,7 +42,7 @@ export const LanguageSwitcher = () => {
         >
           <div className="flex items-center space-x-2">
             <Languages className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">{currentLanguage.nativeName}</span>
+            <span className="text-sm font-medium">{getCurrentLanguageData().nativeName}</span>
           </div>
         </Button>
       </DropdownMenuTrigger>
@@ -59,7 +61,7 @@ export const LanguageSwitcher = () => {
               <span className="font-medium">{language.nativeName}</span>
               <span className="text-xs text-muted-foreground">{language.name}</span>
             </div>
-            {currentLanguage.code === language.code && (
+            {currentLanguage === language.code && (
               <Check className="h-4 w-4 text-primary" />
             )}
           </DropdownMenuItem>
