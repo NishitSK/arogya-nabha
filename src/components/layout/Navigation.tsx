@@ -13,7 +13,8 @@ import {
   Home,
   Map,
   Book,
-  Phone
+  Phone,
+  Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -49,6 +50,12 @@ export const Navigation = () => {
       label: "अस्पताल", // Hospital in Hindi
       labelEn: "Hospitals",
       icon: Map 
+    },
+    { 
+      path: "/volunteer", 
+      label: "स्वयंसेवक", // Volunteer in Hindi
+      labelEn: "Volunteer",
+      icon: Users 
     },
     { 
       path: "/emergency", 

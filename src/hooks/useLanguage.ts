@@ -17,6 +17,7 @@ const translations: LanguageData = {
     'nav.patient': 'Patient',
     'nav.doctor': 'Doctor',
     'nav.hospitals': 'Hospitals',
+    'nav.volunteer': 'Volunteer',
     'nav.emergency': 'Emergency',
     
     // Homepage
@@ -71,6 +72,7 @@ const translations: LanguageData = {
     'nav.patient': 'मरीज़',
     'nav.doctor': 'डॉक्टर',
     'nav.hospitals': 'अस्पताल',
+    'nav.volunteer': 'स्वयंसेवक',
     'nav.emergency': 'आपातकाल',
     
     // Homepage
@@ -125,6 +127,7 @@ const translations: LanguageData = {
     'nav.patient': 'ਮਰੀਜ਼',
     'nav.doctor': 'ਡਾਕਟਰ',
     'nav.hospitals': 'ਹਸਪਤਾਲ',
+    'nav.volunteer': 'ਸਵੈਸੇਵਕ',
     'nav.emergency': 'ਐਮਰਜੈਂਸੀ',
     
     // Homepage
