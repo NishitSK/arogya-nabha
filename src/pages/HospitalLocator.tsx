@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   MapPin, 
   Navigation, 
@@ -12,13 +13,48 @@ import {
   Search,
   Stethoscope,
   Heart,
-  Eye,
-  Baby
+  Eye
 } from "lucide-react";
 
-export const HospitalLocator = () => {
+const HospitalLocator = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 24
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 24
+      }
+    }
+  };
+
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24
+  };
 
   const hospitals = [
     {
@@ -95,8 +131,13 @@ export const HospitalLocator = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
-      <div className="container mx-auto max-w-6xl">
+    <motion.div
+      className="min-h-screen p-4 md:p-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      <div className="container mx-auto max-w-6xl space-y-6">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -156,14 +197,24 @@ export const HospitalLocator = () => {
         </Card>
 
         {/* Hospital List */}
-        <div className="space-y-4">
+        <motion.div variants={itemVariants} className="space-y-4">
           <h2 className="text-xl font-semibold text-foreground">
             Healthcare Facilities ({filteredHospitals.length})
           </h2>
           
-          {filteredHospitals.map((hospital, index) => (
-            <Card key={index} className="glass-card p-6 border-primary/20 hover:shadow-hover transition-all duration-300">
-              <div className="flex flex-col md:flex-row md:items-start justify-between">
+          <AnimatePresence mode="sync">
+            {filteredHospitals.map((hospital, index) => (
+              <motion.div
+                key={hospital.name}
+                variants={itemVariants}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                whileHover={{ scale: 1.02 }}
+                transition={springTransition}
+              >
+                <Card className="glass-card p-6 border-primary/20 hover:shadow-hover transition-all duration-300">
+                  <div className="flex flex-col md:flex-row md:items-start justify-between">
                 {/* Hospital Info */}
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
@@ -230,12 +281,15 @@ export const HospitalLocator = () => {
                 </div>
               </div>
             </Card>
+          </motion.div>
           ))}
-        </div>
+          </AnimatePresence>
+        </motion.div>
 
         {/* Emergency Info */}
-        <Card className="glass-card p-6 mt-8 border-destructive/20 bg-destructive/5">
-          <div className="text-center">
+        <motion.div variants={itemVariants}>
+          <Card className="glass-card p-6 mt-8 border-destructive/20 bg-destructive/5">
+            <div className="text-center">
             <h3 className="text-lg font-semibold text-destructive mb-2">
               Emergency Services
             </h3>
@@ -261,8 +315,9 @@ export const HospitalLocator = () => {
             </div>
           </div>
         </Card>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

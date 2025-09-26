@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { 
@@ -16,9 +17,12 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
+import { motion, AnimatePresence } from "framer-motion";
+import { containerVariants, itemVariants, springTransition, cardVariants } from "@/lib/animations";
 
 export const HomePage = () => {
   const { t } = useLanguage();
+
   const quickActions = [
     {
       title: "Book Appointment",
@@ -82,7 +86,12 @@ export const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <motion.div
+      className="min-h-screen flex flex-col items-center justify-center"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+    >
       {/* Hero Section */}
       <section className="healthcare-gradient py-20 px-4">
         <div className="container mx-auto text-center">
@@ -205,7 +214,7 @@ export const HomePage = () => {
           </Card>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

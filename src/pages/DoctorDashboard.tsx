@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Calendar, 
   Users, 
@@ -14,6 +15,32 @@ import {
 } from "lucide-react";
 
 export const DoctorDashboard = () => {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+      opacity: 1, 
+      y: 0
+    }
+  };
+
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24
+  };
+
   const todayAppointments = [
     {
       patient: "Rajesh Kumar",
@@ -52,7 +79,12 @@ export const DoctorDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
+    <motion.div
+      className="min-h-screen p-4 md:p-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+    >
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8">
@@ -236,7 +268,7 @@ export const DoctorDashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

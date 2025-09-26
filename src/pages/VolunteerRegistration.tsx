@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Heart, Users, Phone, Car } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const VolunteerRegistration = () => {
   const { t } = useLanguage();
@@ -54,7 +55,12 @@ export const VolunteerRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+      className="min-h-screen py-12 px-4"
+    >
       <div className="container mx-auto max-w-2xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -177,6 +183,6 @@ export const VolunteerRegistration = () => {
           </Card>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -9,13 +9,8 @@ export const MainLayout = () => {
       {/* Main Navigation */}
       <Navigation />
       
-      {/* Language Switcher */}
-      <div className="fixed top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-      
       {/* Main Content */}
-      <main className="relative">
+      <main className="relative pt-16"> {/* Add padding-top to account for fixed navbar */}
         <Outlet />
       </main>
       
