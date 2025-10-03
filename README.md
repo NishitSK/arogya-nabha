@@ -5,7 +5,7 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/NishitSK/arogya-nabha)]()
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/NishitSK/arogya-nabha)
 
-**Arogya Nabha** (Health Nabha) is a dedicated, open-source telemedicine platform focused on providing essential and localized healthcare access to the residents of **Nabha, Punjab**. It bridges the gap between rural communities and medical professionals through digital consultation and record management.
+**Arogya Nabha** (Health Nabha) is a dedicated, open-source telemedicine platform focused on providing essential and localized healthcare access to the residents of **Nabha, Punjab**. It bridges the gap between rural communities and medical professionals through digital consultation, localized emergency services, and comprehensive record management.
 
 Project is live at [**Arogya Nabha**](https://arogyanabha.vercel.app/).
 
@@ -19,6 +19,45 @@ Arogya Nabha is designed to be highly functional and community-focused:
 * **Emergency Response:** Features a crucial **Emergency Services** section with local contacts and a **Volunteer Registration** module to build a community-based rapid response team.
 * **Telehealth System:** Robust **Doctor** and **Patient Dashboards** manage scheduling, virtual consultations, digital prescriptions, and health records.
 * **Local Locator:** Utilizes map integration to help users **Find Nearby Hospitals** in Nabha, with filters for government, private, and charitable facilities.
+
+---
+
+## 📸 Screenshots
+
+Here's a glimpse into the Arogya Nabha application:
+
+### Welcome Screen / Patient Portal
+![Arogya Nabha Welcome Screen](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%202.png)
+_The main landing page, highlighting quick access services and the platform's mission._
+
+### Patient Dashboard
+![Arogya Nabha Patient Dashboard](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%203.png)
+_A centralized hub for patients to manage appointments, view health summaries, and access records._
+
+### Doctor Dashboard (English)
+![Arogya Nabha Doctor Dashboard English](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%206.png)
+_The doctor's overview, showing appointments, patient count, and quick actions._
+
+### Doctor Dashboard (Hindi/Detailed)
+![Arogya Nabha Doctor Dashboard Hindi](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%201.png)
+_A more detailed view of the doctor's dashboard, showing schedule, recent patients, and pending tasks in Hindi._
+
+### Find Nearby Hospitals
+![Arogya Nabha Find Nearby Hospitals](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%204.png)
+_Interactive map view to locate healthcare facilities in Nabha with filters and contact details._
+
+### Local Volunteer Registration
+![Arogya Nabha Local Volunteer Registration](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%205.png)
+_Form for local community members to register as volunteers for emergency assistance._
+
+### Emergency Services
+![Arogya Nabha Emergency Services](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%208.png)
+_Quick access to emergency contacts and vital first aid tips._
+
+### Patient Dashboard (Multilingual - Hindi)
+![Arogya Nabha Patient Dashboard Multilingual](https://raw.githubusercontent.com/NishitSK/arogya-nabha/main/screenshots/Image%209.png)
+_Illustrating the multilingual capability with the patient dashboard displayed in Hindi._
+
 
 ---
 
