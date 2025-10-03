@@ -7,8 +7,6 @@ import {
   Video, 
   MapPin, 
   Shield, 
-  Book, 
-  Users, 
   Heart,
   Stethoscope,
   Pill,
@@ -17,8 +15,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
-import { motion, AnimatePresence } from "framer-motion";
-import { containerVariants, itemVariants, springTransition, cardVariants } from "@/lib/animations";
+import { motion } from "framer-motion";
 
 export const HomePage = () => {
   const { t } = useLanguage();
