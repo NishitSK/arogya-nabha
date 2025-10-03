@@ -9,7 +9,7 @@ const testAuth = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to database:', process.env.MONGODB_URI);
     
-    const identifier = 'dr_sharma';
+    const identifier = 'doctor';
     console.log('Looking for user with identifier:', identifier);
     
     // Find user by username or email (same logic as in auth route)
