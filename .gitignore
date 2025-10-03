@@ -15,9 +15,10 @@ dist-ssr
 # Environment variables
 .env
 .env.local
-.env.production
-.env.staging
 .env.*.local
+
+# Note: For Render deployment, set environment variables in dashboard
+# No .env files needed in production
 
 # Editor directories and files
 .vscode/*
