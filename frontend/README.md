@@ -36,6 +36,36 @@ npm i
 npm run dev
 ```
 
+## Environment Configuration
+
+This project uses environment variables to configure different environments (development, production, etc.).
+
+### Environment Files
+
+- `.env` - Default environment variables (loaded in all environments)
+- `.env.development` - Development-specific variables
+- `.env.production` - Production-specific variables
+- `.env.example` - Template file showing available variables
+
+### Key Environment Variables
+
+- `BACKEND_API_URL` - URL of the backend API server
+  - Development: `http://localhost:5000` (default)
+  - Production: Set to your deployed backend URL (e.g., `https://api.your-domain.com`)
+- `PORT` - Port for the development server (default: 8080)
+
+### Setting up for Different Environments
+
+1. **Development**: Copy `.env.example` to `.env` and update values as needed
+2. **Production**: Update `BACKEND_API_URL` in `.env.production` with your production backend URL
+
+### Build Commands
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build with development configuration
+- `npm run preview` - Preview production build locally
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
