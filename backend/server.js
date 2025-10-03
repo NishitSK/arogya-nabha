@@ -35,6 +35,13 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 const server = createServer(app);
 
+// CORS configuration - More flexible for production
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://arogyanabha.vercel.app",
+  "http://localhost:8080",
+].filter(Boolean); // Remove undefined values
+
 const io = new Server(server, {
   cors: {
     origin: allowedOrigins,
@@ -64,13 +71,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use(limiter);
-
-// CORS configuration - More flexible for production
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "https://arogyanabha.vercel.app",
-  "http://localhost:8080",
-].filter(Boolean); // Remove undefined values
 
 app.use(cors({
   origin: function (origin, callback) {
