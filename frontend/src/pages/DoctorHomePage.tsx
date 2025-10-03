@@ -17,6 +17,7 @@ import {
   MessageSquare,
   Activity
 } from "lucide-react";
+import { authenticatedApiCall } from '@/lib/api';
 
 
 export default function DoctorHomePage() {
@@ -26,24 +27,16 @@ export default function DoctorHomePage() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch('/api/doctor/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(res => res.text())
-      .then(text => {
-        let data: any = null;
-        try {
-          if (text.trim()) {
-            data = JSON.parse(text);
-          }
-        } catch (parseError) {
-          console.error('Failed to parse JSON response:', parseError, 'Raw response:', text);
-          data = null;
-        }
+    
+    authenticatedApiCall('/api/doctor/me')
+      .then(data => {
         setDoctor(data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(error => {
+        console.error('Failed to fetch doctor data:', error);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <div>{t('common.loading')}</div>;

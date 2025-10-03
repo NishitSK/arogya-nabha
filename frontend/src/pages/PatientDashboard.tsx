@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { cn } from "@/lib/utils";
 import { containerVariants, itemVariants, springTransition, cardVariants } from "@/lib/animations";
+import { authenticatedApiCall } from '@/lib/api';
 
 function PatientDashboard() {
   const { t, tFormat } = useLanguage();
@@ -31,34 +32,18 @@ function PatientDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch('/api/patient/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        return res.text();
-      })
-      .then(text => {
-        let data: any = {};
-        if (text.trim()) {
-          try {
-            data = JSON.parse(text);
-          } catch (parseError) {
-            console.error('JSON Parse Error in PatientDashboard:', parseError);
-            data = {};
-          }
-        }
-        setPatient(data);
+    
+    authenticatedApiCall('/api/patient/me')
+      .then(data => {
+        setPatient(data || {});
         setForm({
-          name: data.name || '',
-          age: data.age || '',
-          gender: data.gender || '',
-          address: data.address || '',
-          phone: data.phone || '',
+          name: data?.name || '',
+          age: data?.age || '',
+          gender: data?.gender || '',
+          address: data?.address || '',
+          phone: data?.phone || '',
         });
-        setEdit(!data.name); // If no name, prompt to fill form
+        setEdit(!data?.name); // If no name, prompt to fill form
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -72,32 +57,18 @@ function PatientDashboard() {
     e.preventDefault();
     setError('');
     setSuccess('');
-    const token = localStorage.getItem('token');
+    
     try {
-      const res = await fetch('/api/patient/me', {
+      const data = await authenticatedApiCall('/api/patient/me', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(form),
       });
-      const text = await res.text();
-      let data: any = {};
-      try {
-        if (text.trim()) {
-          data = JSON.parse(text);
-        }
-      } catch (parseError) {
-        console.error('Failed to parse JSON response:', parseError, 'Raw response:', text);
-        throw new Error('Server returned invalid response');
-      }
-      if (!res.ok) throw new Error(data.message || 'Update failed');
+      
       setPatient(data);
       setEdit(false);
-      setSuccess('Profile updated!');
+      setSuccess('Profile updated successfully!');
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || 'Update failed');
     }
   };
 

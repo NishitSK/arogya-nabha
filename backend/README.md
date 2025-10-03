@@ -77,7 +77,7 @@ A comprehensive healthcare management backend system built with Node.js, Express
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/arogyannabha
    JWT_SECRET=your-super-secret-jwt-key-here
-   CLIENT_URL=http://localhost:5173
+   CLIENT_URL=http://localhost:8080
 
    # Cloudinary Configuration
    CLOUDINARY_CLOUD_NAME=your-cloud-name

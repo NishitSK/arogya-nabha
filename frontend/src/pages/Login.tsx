@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { apiCall } from '@/lib/api';
 
 export default function Login({ onLogin }: { onLogin?: () => void }) {
   const [username, setUsername] = useState('');
@@ -16,21 +17,16 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('/api/auth/login', {
+      const data = await apiCall('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier: username, password }),
       });
-      let data = null;
-      const text = await res.text();
-      try {
-        data = text ? JSON.parse(text) : null;
-      } catch (jsonErr) {
-        throw new Error('Invalid server response');
-      }
-      if (!res.ok) throw new Error(data?.message || 'Login failed');
+      
+      if (!data?.token) throw new Error('No token received');
+      
       localStorage.setItem('token', data.token);
       if (onLogin) onLogin();
+      
       // Decode JWT to get role
       let role = data.role;
       if (!role && data.token) {

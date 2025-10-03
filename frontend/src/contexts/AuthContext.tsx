@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authenticatedApiCall } from '../lib/api';
 
 interface AuthContextType {
   token: string | null;
@@ -29,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchUser = (authToken: string) => {
+  const fetchUser = async (authToken: string) => {
     const payload = getPayloadFromToken(authToken);
     if (!payload || !payload.role) {
       setLoading(false);
@@ -37,34 +38,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     setRole(payload.role);
     const apiUrl = payload.role === 'doctor' ? '/api/doctor/me' : '/api/patient/me';
-    fetch(apiUrl, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        return res.text();
-      })
-      .then(text => {
-        let data = null;
-        if (text.trim()) {
-          try {
-            data = JSON.parse(text);
-          } catch (parseError) {
-            console.error('JSON Parse Error:', parseError);
-            console.error('Response text:', text);
-            throw new Error('Invalid JSON response');
-          }
-        }
-        setUser(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch user profile:', error);
-        setUser(null);
-        setLoading(false);
-      });
+    
+    try {
+      // Store current token temporarily for this call
+      const currentToken = localStorage.getItem('token');
+      localStorage.setItem('token', authToken);
+      
+      const data = await authenticatedApiCall(apiUrl);
+      setUser(data);
+      setLoading(false);
+      
+      // Restore original token
+      if (currentToken) {
+        localStorage.setItem('token', currentToken);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user profile:', error);
+      setUser(null);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

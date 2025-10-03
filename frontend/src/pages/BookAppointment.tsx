@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { authenticatedApiCall } from '@/lib/api';
 
 const BookAppointment: React.FC = () => {
   const [form, setForm] = useState({ specialization: '', date: '', time: '', type: 'teleconsultation' });
   const [message, setMessage] = useState('');
-  const token = localStorage.getItem('token');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -13,15 +13,11 @@ const BookAppointment: React.FC = () => {
     e.preventDefault();
     setMessage('');
     try {
-      const res = await fetch('/api/appointments', {
+      const data = await authenticatedApiCall('/api/appointments', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...form })
       });
-      const text = await res.text();
-      let data: any = null;
-      if (text.trim()) { try { data = JSON.parse(text); } catch { /* ignore */ } }
-      if (!res.ok) throw new Error(data?.message || 'Failed to book appointment');
+      
       if (data && data.doctor && data.doctor.name) {
         setMessage(`Appointment pending with Dr. ${data.doctor.name}`);
       } else {

@@ -1,3 +1,16 @@
+// API configuration
+const getApiBaseUrl = () => {
+  return import.meta.env.BACKEND_API_URL || 'http://localhost:5000';
+};
+
+// Construct full API URL
+export const buildApiUrl = (endpoint: string) => {
+  const baseUrl = getApiBaseUrl();
+  // Remove leading slash from endpoint if present to avoid double slashes
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+  return `${baseUrl}/${cleanEndpoint}`;
+};
+
 // API utility with robust error handling
 export class ApiError extends Error {
   constructor(public status: number, message: string, public response?: any) {
@@ -8,7 +21,10 @@ export class ApiError extends Error {
 
 export const apiCall = async (url: string, options: RequestInit = {}) => {
   try {
-    const response = await fetch(url, {
+    // Automatically prepend base URL if the URL starts with /api
+    const fullUrl = url.startsWith('/api') ? buildApiUrl(url) : url;
+    
+    const response = await fetch(fullUrl, {
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -71,4 +87,9 @@ export const authenticatedApiCall = async (url: string, options: RequestInit = {
       ...options.headers,
     },
   });
+};
+
+// Legacy function for backward compatibility - now uses the environment-aware apiCall
+export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
+  return apiCall(endpoint, options);
 };

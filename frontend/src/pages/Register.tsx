@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { apiCall } from '@/lib/api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -35,9 +36,8 @@ export default function Register() {
     }
     
     try {
-      const res = await fetch('/api/auth/register', {
+      const data = await apiCall('/api/auth/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           username, 
           email, 
@@ -48,14 +48,7 @@ export default function Register() {
           role 
         }),
       });
-      const text = await res.text();
-      let data = null;
-      try {
-        data = text ? JSON.parse(text) : null;
-      } catch (jsonErr) {
-        throw new Error('Invalid server response');
-      }
-      if (!res.ok) throw new Error(data?.message || 'Registration failed');
+      
       setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => {
         navigate('/login');

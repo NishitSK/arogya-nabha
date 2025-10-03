@@ -18,6 +18,7 @@ import PatientProfile from "./pages/PatientProfile";
 import DoctorProfile from "./pages/DoctorProfile";
 import Emergency from "@/pages/Emergency"; // Adding Emergency page
 import { useEffect, useState } from "react";
+import { authenticatedApiCall } from '@/lib/api';
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import Prescriptions from './pages/Prescriptions';
@@ -81,35 +82,18 @@ function RequirePatientProfile({ children, role }: { children: React.ReactNode; 
       return;
     }
     
-    fetch('/api/patient/me', { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        return res.text();
-      })
-      .then(text => {
-        let data = {};
-        if (text.trim()) {
-          try {
-            data = JSON.parse(text);
-          } catch (parseError) {
-            console.error('JSON Parse Error in profile check:', parseError);
-            data = {};
-          }
-        }
-        setHasProfile(!!data && Object.keys(data).length > 0);
-        if (data && Object.keys(data).length > 0) {
-          localStorage.setItem('patientHasProfile', '1');
+    authenticatedApiCall('/api/patient/me')
+      .then(data => {
+        if (data && data.name) {
+          setHasProfile(true);
         }
         setLoading(false);
       })
-      .catch((error) => {
-        console.error('Failed to check patient profile:', error);
-        setHasProfile(false); 
-        setLoading(false); 
+      .catch(error => {
+        console.error('Failed to check profile:', error);
+        setLoading(false);
       });
-  }, [location.pathname, hasProfile]);
+  }, []);
 
   // While loading, show lightweight placeholder (avoid flicker)
   if (loading) return <div className="p-6 text-sm text-muted-foreground">Checking profile…</div>;

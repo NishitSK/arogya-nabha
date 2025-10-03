@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Activity
 } from "lucide-react";
+import { authenticatedApiCall } from '@/lib/api';
 
 export const DoctorDashboard = () => {
   // Animation variants
@@ -51,14 +52,16 @@ export const DoctorDashboard = () => {
     if (!token) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/appointments', { headers: { Authorization: `Bearer ${token}` }});
-      const text = await res.text();
-      let data:any=null; if (text.trim()) { try { data = JSON.parse(text); } catch {}}
-      if (res.ok && Array.isArray(data)) {
+      const data = await authenticatedApiCall('/api/appointments');
+      if (Array.isArray(data)) {
         data.sort((a,b)=> new Date(a.date).getTime() - new Date(b.date).getTime());
         setAppointments(data);
       }
-    } finally { setLoading(false); }
+    } catch (error) {
+      console.error('Failed to fetch appointments:', error);
+    } finally { 
+      setLoading(false); 
+    }
   };
 
   useEffect(()=>{
@@ -71,12 +74,15 @@ export const DoctorDashboard = () => {
   const act = async (id:string, action:'accept'|'reject') => {
     if (!token) return;
     try {
-      const res = await fetch(`/api/appointments/${id}/${action}`, { method:'POST', headers:{ Authorization:`Bearer ${token}` }});
-      const txt = await res.text(); let data:any=null; if (txt.trim()) { try { data = JSON.parse(txt);} catch {} }
-      if (res.ok && data) {
+      const data = await authenticatedApiCall(`/api/appointments/${id}/${action}`, { 
+        method:'POST'
+      });
+      if (data) {
         setAppointments(prev => prev.map(a => a._id === data._id ? data : a));
       }
-    } catch {/* ignore */}
+    } catch (error) {
+      console.error('Failed to update appointment:', error);
+    }
   };
 
   const { t } = useLanguage();

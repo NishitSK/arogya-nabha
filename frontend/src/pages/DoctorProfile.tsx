@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { authenticatedApiCall } from '@/lib/api';
 
 export default function DoctorProfile() {
   const [doctor, setDoctor] = useState<any>(null);
@@ -14,20 +15,18 @@ export default function DoctorProfile() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) { setLoading(false); return; }
-    fetch('/api/doctor/me', { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => res.text())
-      .then(text => {
-        let data: any = {};
-        try {
-          if (text.trim()) {
-            data = JSON.parse(text);
-          }
-        } catch (parseError) {
-          console.error('Failed to parse JSON response:', parseError, 'Raw response:', text);
-          data = {};
-        }
+    
+    authenticatedApiCall('/api/doctor/me')
+      .then(data => {
         if (data && Object.keys(data).length) {
           setDoctor(data);
+          setForm({
+            name: data.name || '',
+            specialization: data.specialization || '',
+            experience: data.experience || '',
+            phone: data.phone || '',
+            clinic: data.clinic || '',
+          });
           setForm({
             name: data.name || '',
             specialization: data.specialization || '',
@@ -52,34 +51,22 @@ export default function DoctorProfile() {
     e.preventDefault();
     setError('');
     setSuccess('');
-    const token = localStorage.getItem('token');
+    
     try {
-      const res = await fetch('/api/doctor/me', {
+      const data = await authenticatedApiCall('/api/doctor/me', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(form),
       });
-      const text = await res.text();
-      let data: any = {};
-      try {
-        if (text.trim()) {
-          data = JSON.parse(text);
-        }
-      } catch (parseError) {
-        console.error('Failed to parse JSON response:', parseError, 'Raw response:', text);
-        throw new Error('Server returned invalid response');
-      }
-      if (!res.ok) throw new Error(data.message || 'Update failed');
-  setDoctor(data);
-  localStorage.setItem('doctorHasProfile', '1');
-  setEdit(false);
-  setSuccess('Profile updated!');
-  navigate('/doctor');
+      
+      setDoctor(data);
+      setEdit(false);
+      setSuccess('Profile updated successfully! Redirecting to dashboard...');
+      
+      setTimeout(() => {
+        navigate('/doctor');
+      }, 1500);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || 'Update failed');
     }
   };
 
