@@ -1,0 +1,1 @@
+Placeholder for logo image. Replace with provided image file (PNG) named `logo.png` in this folder.
